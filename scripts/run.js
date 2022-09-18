@@ -25,7 +25,8 @@ const main = async () => {
     }
 
     console.log("Finally........ \n\n\n");
-    waveTxn = await waveContract.topWaver();
+    waveTxn = await waveContract.getAllWaves();
+    console.log(waveTxn);
 
 };
 
