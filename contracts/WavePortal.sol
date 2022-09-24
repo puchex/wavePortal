@@ -16,7 +16,7 @@ contract WavePortal{
 
     event newWave(address indexed from , string data, uint timestamp);
 
-    constructor(){
+    constructor() payable {
         console.log("Im born at last!!, Awesomeness on the way...");
     }
 
@@ -25,6 +25,13 @@ contract WavePortal{
         console.log(msg.sender, " has just waves **Sigh**, says : ", data);
         waves.push(Wave(msg.sender,data,block.timestamp));
         emit newWave(msg.sender, data, block.timestamp);
+	uint256 prize = 0.0001 ether;
+	require(
+		prize <= address(this).balance,
+		"Insufficient balance in contract.. Add funds"
+	);
+	(bool success, ) = (msg.sender).call{value : prize}("Thanks for waving");
+	require(success, "Failed to send money in respone to waving");
     }
 
     function getAllWaves() public view returns (Wave[] memory){
